@@ -5,21 +5,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Flipper</title>
   <link rel="stylesheet" href="style.css" />
+  <script>
+    // Verifica se o usuário está logado
+    if (!localStorage.getItem('logado')) {
+      window.location.href = 'login.html';
+    }
+  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   <link rel="icon" href="logo.jpg" type="image/png" />
 </head>
 <body>
   <header class="header">
     <div class="container logo">
-  <img src="images\logo.jpg" alt="Logo" class="logo-img" />
-  <div class="logo-text">
-    <h1 class="title">Flipper</h1>
-    <p class="subtitle">Conectando Conhecimento</p>
-    <p class="address">flipperacad.com.br</p>
-  </div>
-</div>
-
+      <img src="images\logo.jpg" alt="Logo" class="logo-img" />
+      <div class="logo-text">
+        <h1 class="title">Flipper</h1>
+        <p class="subtitle">Conectando Conhecimento</p>
+        <p class="address">flipperacad.com.br</p>
+      </div>
+      <div style="position: absolute; top: 20px; right: 20px; display: flex; align-items: center; gap: 20px;">
+        <span id="usuarioLogado" style="color: #007bff; font-weight: bold;"></span>
+        <button onclick="fazerLogout()" style="padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer;">Sair</button>
+      </div>
+    </div>
   </header>
+
+  <script>
+    // Mostra o CPF do usuário logado
+    const cpfUsuario = localStorage.getItem('cpfUsuario');
+    if (cpfUsuario) {
+      document.getElementById('usuarioLogado').textContent = `CPF: ${cpfUsuario}`;
+    }
+
+    function fazerLogout() {
+      localStorage.removeItem('logado');
+      localStorage.removeItem('cpfUsuario');
+      window.location.href = 'login.html';
+    }
+  </script>
 
   <main class="main-content">
     <section class="main-menu container">
