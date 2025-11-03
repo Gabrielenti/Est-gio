@@ -56,7 +56,8 @@
   </style>
   <script>
     function fazerLogin() {
-      const cpf = document.getElementById('cpfUsuario').value;
+      // Normaliza CPF removendo pontos/traços para comparar com o registro
+      const cpf = document.getElementById('cpfUsuario').value.replace(/\D/g, '');
       const senha = document.getElementById('senhaUsuario').value;
       const errorMessage = document.getElementById('errorMessage');
       
@@ -72,9 +73,12 @@
         return false;
       }
       
-      // Se encontrou o usuário, salva o estado de login
-      localStorage.setItem('logado', 'true');
-      localStorage.setItem('cpfUsuario', cpf);
+  // Se encontrou o usuário, salva o estado de login e informações do usuário
+  localStorage.setItem('logado', 'true');
+  localStorage.setItem('cpfUsuario', cpf);
+  // salvar nome e tipo para exibir no index
+  if (usuario.nome) localStorage.setItem('nomeUsuario', usuario.nome);
+  if (usuario.tipoUsuario) localStorage.setItem('tipoUsuario', usuario.tipoUsuario);
       
       window.location.href = 'index.html';
       return false;

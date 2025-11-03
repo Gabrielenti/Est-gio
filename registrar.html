@@ -2,112 +2,80 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Registrar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta - Flipper</title>
     <link rel="stylesheet" href="registrar.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .register-container {
-            background-color: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            width: 300px;
-        }
-        .input-field {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .register-button {
-            width: 100%;
-            padding: 12px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            margin: 20px 0;
-        }
-        .register-button:hover {
-            background-color: #0056b3;
-        }
-        .links {
-            margin-top: 15px;
-            text-align: center;
-        }
-        .links a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        .links a:hover {
-            text-decoration: underline;
-        }
-        .error-message {
-            color: red;
-            display: none;
-            margin-top: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
 <body>
-    <div class="register-container">
-        <h2>Registrar</h2>
-        <form id="registerForm" onsubmit="return registrarUsuario()">
-            <input type="text" id="cpf" class="input-field" placeholder="CPF" required pattern="\d{11}" title="Digite um CPF válido com 11 dígitos">
-            <input type="password" id="senha" class="input-field" placeholder="Senha" required>
-            <input type="password" id="confirmarSenha" class="input-field" placeholder="Confirmar Senha" required>
-            <button type="submit" class="register-button">Registrar</button>
-            <div class="error-message" id="errorMessage"></div>
-        </form>
-        <div class="links">
-            <a href="login.html">Já tem uma conta? Faça login</a>
+    <div class="card-container">
+        
+        <div class="header-logo">
+            <div class="logo-circle">
+                <img src="logo.jpg" alt="Logo Flipper" id="dolphinLogo" class="logo-real">
+            </div>
+            <h1 class="main-title">Criar Conta</h1>
+            <p class="subtitle">Preencha os dados para se cadastrar</p>
         </div>
+
+        <form id="registerForm" class="form-register">
+            
+            <div class="input-group">
+                <label for="nome">Nome Completo</label>
+                <input type="text" id="nome" name="nome" placeholder="Digite seu nome completo" required>
+            </div>
+
+            <div class="input-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+            </div>
+
+            <div class="input-group">
+                <label for="cpf">CPF</label>
+                <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" maxlength="14" required>
+            </div>
+
+            <div class="input-group">
+                <label for="curso">Curso</label>
+                <input type="text" id="curso" name="curso" placeholder="Digite seu curso" required>
+            </div>
+
+            <div class="input-group">
+                <label for="senha">Senha</label>
+                <div class="password-wrapper">
+                    <input type="password" id="senha" name="senha" placeholder="Mínimo de 8 caracteres" minlength="8" required>
+                    <i class="far fa-eye toggle-password" data-target="senha"></i>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="tipoUsuario">Tipo de Usuário</label>
+                <select id="tipoUsuario" name="tipoUsuario" required>
+                    <option value="" disabled selected>Selecione o tipo de usuário</option>
+                        <option value="aluno">Aluno</option>
+                        <option value="professor">Professor</option>
+                        <option value="coordenador">Coordenador</option>
+                        <option value="administrador">Administrador</option>
+                </select>
+                <i class="fas fa-chevron-down select-icon"></i>
+            </div>
+
+            <div class="input-group">
+                <label for="confirmaSenha">Confirmar Senha</label>
+                <div class="password-wrapper">
+                    <input type="password" id="confirmaSenha" name="confirmaSenha" placeholder="Digite a senha novamente" required>
+                    <i class="far fa-eye toggle-password" data-target="confirmaSenha"></i>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button type="button" class="btn btn-voltar">Voltar</button>
+                <button type="submit" class="btn btn-registrar">Registrar</button>
+            </div>
+
+        </form>
     </div>
 
-    <script>
-        function registrarUsuario() {
-            const cpf = document.getElementById('cpf').value;
-            const senha = document.getElementById('senha').value;
-            const confirmarSenha = document.getElementById('confirmarSenha').value;
-            const errorMessage = document.getElementById('errorMessage');
-
-            // Verifica se as senhas são iguais
-            if (senha !== confirmarSenha) {
-                errorMessage.style.display = 'block';
-                errorMessage.textContent = 'As senhas não coincidem!';
-                return false;
-            }
-
-            // Pega os usuários já cadastrados ou cria um array vazio
-            let usuarios = JSON.parse(localStorage.getItem('usuarios') || '[]');
-
-            // Verifica se o CPF já está cadastrado
-            if (usuarios.some(u => u.cpf === cpf)) {
-                errorMessage.style.display = 'block';
-                errorMessage.textContent = 'CPF já cadastrado!';
-                return false;
-            }
-
-            // Adiciona o novo usuário
-            usuarios.push({ cpf, senha });
-            localStorage.setItem('usuarios', JSON.stringify(usuarios));
-
-            // Redireciona para a página de login
-            alert('Cadastro realizado com sucesso!');
-            window.location.href = 'login.html';
-            return false;
-        }
-    </script>
+    <script src="registar.js"></script>
 </body>
 </html>

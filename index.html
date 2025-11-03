@@ -17,7 +17,7 @@
 <body>
   <header class="header">
     <div class="container logo">
-      <img src="images\logo.jpg" alt="Logo" class="logo-img" />
+      <img src="logo.jpg" alt="Logo" class="logo-img" />
       <div class="logo-text">
         <h1 class="title">Flipper</h1>
         <p class="subtitle">Conectando Conhecimento</p>
@@ -31,15 +31,19 @@
   </header>
 
   <script>
-    // Mostra o CPF do usuário logado
-    const cpfUsuario = localStorage.getItem('cpfUsuario');
-    if (cpfUsuario) {
-      document.getElementById('usuarioLogado').textContent = `CPF: ${cpfUsuario}`;
+    // Mostra nome e tipo do usuário logado
+    const nomeUsuario = localStorage.getItem('nomeUsuario');
+    const tipoUsuario = localStorage.getItem('tipoUsuario');
+    if (nomeUsuario) {
+      const tipoText = tipoUsuario ? ` (${tipoUsuario.charAt(0).toUpperCase() + tipoUsuario.slice(1)})` : '';
+      document.getElementById('usuarioLogado').textContent = `${nomeUsuario}${tipoText}`;
     }
 
     function fazerLogout() {
       localStorage.removeItem('logado');
       localStorage.removeItem('cpfUsuario');
+      localStorage.removeItem('nomeUsuario');
+      localStorage.removeItem('tipoUsuario');
       window.location.href = 'login.html';
     }
   </script>
